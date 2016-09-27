@@ -8,6 +8,11 @@ This module is an exploration on wearable and wireless brain-computer interfaces
 
 ### Session 1
 
-**Description:** Introduction to the the idea of augmented networked minds; this session will begin with a one and a half hour long presentation and short discussion about some theories and concepts behind the main focus of the module. Some related projects will be presented, from both artistic and non-artistic fields. Finished the presentation, the class will continue with a demonstration of a portable electroencephalogram and how it can be wireless interfaced with a computer. We will use processing to write a simple android application which can read and extract the data from the EEG.
+####**Description:** 
 
-**Homework::MEMORY** (due next session): In groups, the students will think about the 	relevance of human memory and how technology can mediate and/or augment this. With the acquired skills from session one the groups should prototype their idea into a simple 	wearable brain-computer interface with a phone APP, which in its functionality, generates an artistic discourse. IMPORTANT: to document in video and post on the class's blog the results of 	the exercise. 
+Introduction to the the idea of augmented networked minds; this session will begin with a one and a half hour long presentation and short discussion about some theories and concepts behind the main focus of the module. Some related projects will be presented, from both artistic and non-artistic fields. Finished the presentation, the class will continue with a demonstration of a portable electroencephalogram and how it can be wireless interfaced with a computer. We will use processing to write a simple android application which can read and extract the data from the EEG.
+
+####**Homework::MEMORY** (due next session): 
+
+In groups, the students will think about the 	relevance of human memory and how technology can mediate and/or augment this. You need to put together your project's ideas onto a presentation. Each group will have 15 minutes MAXIMUM to presnt their proposal during the first hour of our next session. All students MUST install android for processing following the instrucctions given on this link (TURN ON YOUR VPNs otherwise it won't work): http://android.processing.org. Once installed you should follow the getting_started tutorial here: http://android.processing.org/tutorials/getting_started/index.html
+
