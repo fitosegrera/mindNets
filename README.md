@@ -48,3 +48,31 @@ To use the APP:
 3. Once paired, weare the mindwave mobile and run the "phoneAppBCI" APP on your phone.
 4. Play with the app for a while and we will discuss about the experience on our next session.
 
+## Session 2
+
+###**Description:** 
+
+During the second session of this course, we will be doing:
+
+1. Group presentations and discussions of project ideas (Please see Homework::MEMORY of session 1).
+2. We will then do a short course on the usage of github (Beginner's level)
+3. Processing for Android. Making sure every group has at least one computer with the working setup.
+4. Programming the Neurosky for Android using processing.
+5. Individual group meetings.
+
+###**Homework::FINAL** (due next session): 
+
+In your groups you will design, develope and execute your proposed project. The requirements are:
+1. A working protoype which ilustrates your concept/idea using the technical tools studied in class.
+2. A proper documentation of your project, this includes: a) A paper/document describing your project in depth (please follow the instructions later in this README file), b) a video documenting the project (the video is almost as important as the piece), c) a group presentation.
+
+###**PAPER/DOCUMET FORMAT**
+
+The Paper/document should contain the following sections:
+
+1. Title, Author, School
+2. Abstract
+3. Introduction
+4. Conceptual Framework
+5. Technical Description
+6. References 
