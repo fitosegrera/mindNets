@@ -37,6 +37,7 @@ private final Handler handler = new Handler() {
       break;
     case TGDevice.MSG_ATTENTION:
       attention = msg.arg1;
+      attentionTotal = attentionTotal + str(attention) + ",";
       //text("Attention: " + msg.arg1 + "\n", posX, posY);
       //Log.v("HelloA", "Attention: " + att + "\n");
       break;
