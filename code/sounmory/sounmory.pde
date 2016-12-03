@@ -5,6 +5,13 @@ import android.os.Message;
 import android.os.Environment;
 import com.neurosky.thinkgear.*;
 
+//AUDIO
+import android.media.MediaRecorder;
+import android.os.Environment;
+MediaRecorder mRecorder;
+String recFileName;
+//
+
 //BLUETOOTH
 BluetoothAdapter bluetoothAdapter;
 TGDevice tgDevice;
@@ -15,13 +22,19 @@ final boolean rawEnabled = true;
 int connected, connecting, notPaired, disconnected, cantFind;
 boolean btState;
 int attention, meditation, blink, raw1;
+int threshold = 30;
+boolean capture;
+boolean timerStarted;
 //
 
-//AUDIO
-import ketai.sensors.*;
-KetaiAudioInput mic;
-short[] data;
-boolean micStarted;
+//TIMESTAMP
+String uniqueTimestamp;
+int timeCount = 0;
+//
+
+//Timer
+int startTime;
+int timeLimit;
 //
 
 int xPos, yPos;
@@ -40,25 +53,29 @@ void setup() {
   }
 
   orientation(PORTRAIT);
-  mic = new KetaiAudioInput(this);
 
   xPos = width/2;
   yPos = height - (height/4);
   butSize = 220;
   butClicked = false;
-  micStarted = false;
+
+  uniqueTimestamp = str(timeCount);
+
+  timerStarted = false;
+  capture = true;
+  timeLimit = 10000;
 }
 
 void draw() {
   background(120);
 
   if (btState) {
-    if(tgDevice.getState() != TGDevice.STATE_CONNECTING && tgDevice.getState() != TGDevice.STATE_CONNECTED){
+    if (tgDevice.getState() != TGDevice.STATE_CONNECTING && tgDevice.getState() != TGDevice.STATE_CONNECTED) {
       tgDevice.connect(rawEnabled);
     }
     displayState();
-  }else{
-    text("Bluetooth not available!",20,40);
+  } else {
+    text("Bluetooth not available!", 20, 40);
   }
 
   if (butClicked) {
@@ -67,21 +84,35 @@ void draw() {
     fill(255, 25, 0);
   }
   ellipse(xPos, yPos, butSize, butSize);
-  drawData();
+
+  if (butClicked) {
+    checkAttentionAndCapture();
+  }
 }
 
-void onAudioEvent(short[] _data) {
-  data = _data;
-}
+void checkAttentionAndCapture() {
+  if (attention <= threshold && capture) {
+    startRecording();
+    startTime = millis();
+    capture = false;
+    timerStarted = true;
+  }
 
-void drawData() {
-  if (data != null) {
-    for (int i=0; i<data.length; i++) {
-      if (i != data.length-1) {
-        fill(200);
-        line(i, map(data[i], -32768, 32767, height, 0), i+1, map(data[i+1], -32768, 32767, height, 0));
-      }
+  if (timerStarted) {
+    if (millis() - startTime >= timeLimit) {
+      stopRecording();
+      timeCount+=1;
+      uniqueTimestamp = str(timeCount);
+      capture = true;
+      timerStarted = false;
     }
+    int posX = width/2;
+    int posY = 90;
+    textSize(30);
+    textAlign(CENTER);
+    fill(255);
+    text("Sound recording started!", posX, posY+80);
+    text("Timer: " + str((millis() - startTime)/1000), posX, posY+120);
   }
 }
 
@@ -110,11 +141,30 @@ void displayState() {
 void mouseReleased() {
   if (mouseX >= (xPos - butSize/2) && mouseX <= (xPos + butSize/2) && mouseY >= (yPos - butSize/2) && mouseY <= (yPos + butSize/2)) {
     butClicked = !butClicked;
-    micStarted = !micStarted;
-    if (micStarted) {
-      mic.start();
-    } else {
-      mic.stop();
-    }
   }
+}
+
+void startRecording() {
+  recFileName = "//sdcard//sounmory//" + uniqueTimestamp + ".3gp";
+  mRecorder = new MediaRecorder();
+  mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+  mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+  mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+  mRecorder.setOutputFile(recFileName);
+  try {
+    mRecorder.prepare();
+    mRecorder.start();
+  } 
+  catch (IllegalStateException e) {
+    e.printStackTrace();
+  } 
+  catch (IOException e) {
+    e.printStackTrace();
+  }
+}
+
+void stopRecording() {
+  mRecorder.stop();
+  mRecorder.release();
+  mRecorder = null;
 }

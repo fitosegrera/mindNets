@@ -23,6 +23,7 @@ int connected, connecting, notPaired, disconnected, cantFind;
 boolean btState;
 int attention, meditation, blink, raw1;
 String attentionTotal;
+boolean recordAttention;
 //
 
 //TIMESTAMP
@@ -55,6 +56,7 @@ void setup() {
   uniqueTimestamp = str(timeCount);
   
   attentionTotal = "";
+  recordAttention = false;
   
 }
 
@@ -105,20 +107,23 @@ void mouseReleased() {
     butClicked = !butClicked;
     if (butClicked) {
       startRecording();
+      attentionTotal = "";
+      recordAttention = true;
     } else {
       timeCount+=1;
       uniqueTimestamp = str(timeCount);
       // SAVE attentionTotal as a .txt
+      recordAttention = false;
       String[] data = new String[1];
       data[0] = attentionTotal; 
-      saveStrings("//sdcard//sounmory//" + uniqueTimestamp + ".txt" , data);
+      saveStrings("//sdcard//temp_memory//" + uniqueTimestamp + ".txt" , data);
       stopRecording();
     }
   }
 }
 
 void startRecording() {
-  recFileName = "//sdcard//sounmory//" + uniqueTimestamp + ".3gp";
+  recFileName = "//sdcard//temp_memory//" + uniqueTimestamp + ".3gp";
   mRecorder = new MediaRecorder();
   mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
   mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
